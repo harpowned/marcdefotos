@@ -1,0 +1,12 @@
+[Unit]
+Description=Imap photo sync
+
+[Service]
+User=harpo
+Group=harpo
+ExecStart=/home/harpo/imap_photo_sync/imap_photo_sync.py
+Restart=always
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target

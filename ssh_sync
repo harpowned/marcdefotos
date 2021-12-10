@@ -1,0 +1,21 @@
+#!/bin/bash
+sleep 60
+
+while :
+do
+	ssh harpo@192.168.23.3 "ls -lah marc_de_fotos" > /tmp/server_photo_dir
+
+	DIFF=$(diff /tmp/server_photo_dir /home/pi/server_photo_dir) 
+	if [ "$DIFF" != "" ] 
+	then
+		echo "The directory was modified"
+		sudo mount / -o remount,rw
+		sudo -u pi rsync -avz --delete -e ssh harpo@192.168.23.3:marc_de_fotos /home/pi/marc_de_fotos
+		sudo -u pi cp /tmp/server_photo_dir /home/pi/server_photo_dir
+		sudo mount / -o remount,ro
+		sudo reboot
+	else
+		echo "Directory not changed"
+	fi
+	sleep 600
+done

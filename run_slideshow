@@ -1,0 +1,2 @@
+#!/bin/bash
+fbi -a -t 15 -T 1 -noverbose -random /home/pi/marc_de_fotos/marc_de_fotos/*
